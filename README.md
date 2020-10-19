@@ -21,3 +21,5 @@ Write a script that will take a .log and:
 ## My Workflow
 
 Before writing any code to iterate over the log file, I wanted to make sure I could get the log file into the script.  To do this, I decided to test that a `print_log` function would print out the contents the script was given as arguments.
+
+Because I'm using RSpec as my testing library, I can't simply run the test script and pass in a log file. Instead, I need to account for making a class-based script callable, and then test accordingly. It is unfortunately not test-driven, but required. 

@@ -7,3 +7,8 @@ class LogParser
     puts @log
   end
 end
+
+
+if $PROGRAM_NAME == __FILE__
+  LogParser.new(ARGV).print_log
+end
