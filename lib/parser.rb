@@ -6,6 +6,10 @@ class LogParser
   def print_log
     puts @log
   end
+
+  def create_log_array
+    return []
+  end
 end
 
 
