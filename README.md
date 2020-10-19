@@ -9,10 +9,15 @@ Write a script that will take a .log and:
 
 ## The Approach
 
-- Create a Parser Class which initializes with the provided .log
-- Create a Parser instance method which iterates through the log to create a hash of webpages with corresponding visitor IP addresses:
+- Create a LogParser Class which initializes with the provided .log
+- Create a LogParser instance method which iterates through the log to create a hash of webpages with corresponding visitor IP addresses:
 { 'about' : [192.111.111, 123.456.789],
   'index' : [192.111.111, 192.111.111, 123.456.789]
 }
-- Create a Parser instance method which orders the most visited pages and displays them
-- Create a Parser instance method which counts unique IPs in each webpage array and orders them, then displays them
+- Create a LogParser instance method which orders the most visited pages and displays them
+- Create a LogParser instance method which counts unique IPs in each webpage array and orders them, then displays them
+
+
+## My Workflow
+
+Before writing any code to iterate over the log file, I wanted to make sure I could get the log file into the script.  To do this, I decided to test that a `print_log` function would print out the contents the script was given as arguments.
