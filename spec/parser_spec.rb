@@ -37,7 +37,7 @@ describe LogParser do
     it "should create a hash" do
       log = ""
       parser = LogParser.new(log)
-      hash = parser.create_domain_hash
+      hash = parser.create_domain_hash("empty")
       expect(hash).to be_a(Hash)
     end
         

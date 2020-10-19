@@ -12,7 +12,7 @@ class LogParser
     return lines
   end
 
-  def create_domain_hash
+  def create_domain_hash(domains)
     return {}
   end
 end
