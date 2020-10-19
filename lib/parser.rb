@@ -14,8 +14,10 @@ class LogParser
 
   def create_domain_hash(domains)
     hash = Hash.new
-    domain = domains[0].strip.split(" ")
-    hash.store(domain[0], domain[1])
+    domains.each do |d|
+      domain = d.strip.split(" ")
+      hash.store(domain[0], domain[1])
+    end
     return hash
   end
 end
