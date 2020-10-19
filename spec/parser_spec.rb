@@ -31,6 +31,14 @@ describe LogParser do
       array = parser.create_log_array
       expect(array).to eq(['log1', 'log2', 'log3'])
     end
-      
+  end
+  
+  context "#create_domain_hash" do
+    it "should create a hash" do
+      log = ""
+      parser = LogParser.new(log)
+      hash = parser.create_domain_hash
+      expect(hash).to be_a(Hash)
+    end
   end
 end
