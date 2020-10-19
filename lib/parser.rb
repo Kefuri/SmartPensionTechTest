@@ -8,7 +8,8 @@ class LogParser
   end
 
   def create_log_array
-    return []
+    lines = File.readlines(@log)
+    return lines
   end
 end
 
