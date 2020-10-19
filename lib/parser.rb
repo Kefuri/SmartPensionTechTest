@@ -11,6 +11,10 @@ class LogParser
     lines = File.readlines(@log)
     return lines
   end
+
+  def create_domain_hash
+    return {}
+  end
 end
 
 
