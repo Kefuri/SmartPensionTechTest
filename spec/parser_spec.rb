@@ -49,5 +49,13 @@ describe LogParser do
       expect(hash.keys[0]).to eq("/domainname")
     end
 
+    it "should take an array and create a key pair with each item" do
+      logfile = ""
+      parser = LogParser.new(logfile)
+      array = ["/domainname 192.111.111.111", "/domainname 192.111.111.111"]
+      hash = parser.create_domain_hash(array)
+      expect(hash.length).to eq(2)
+    end
+
   end
 end
