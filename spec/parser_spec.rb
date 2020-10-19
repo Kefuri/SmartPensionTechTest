@@ -15,4 +15,13 @@ describe LogParser do
       expect { parser.print_log }.to output(log + "\n").to_stdout
     end
   end
+
+  context "#create_log_array" do
+    it "should return an array" do
+      log = 'log'
+      parser = LogParser.new(log)
+      array = parser.create_log_array
+      expect(array).to be_an(Array)
+    end
+  end
 end
