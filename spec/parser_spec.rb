@@ -57,5 +57,13 @@ describe LogParser do
       expect(hash.length).to eq(2)
     end
 
+    it "should not create duplicate entries for domain names that are the same" do
+      logfile = ""
+      parser = LogParser.new(logfile)
+      array = ["/domainnameone 192.111.111.111", "/domainnameone 192.111.111.111"]
+      hash = parser.create_domain_hash(array)
+      expect(hash.length).to eq(2)
+    end
+
   end
 end
