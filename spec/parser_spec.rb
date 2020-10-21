@@ -62,7 +62,7 @@ describe LogParser do
       parser = LogParser.new(logfile)
       array = ["/domainnameone 192.111.111.111", "/domainnameone 192.111.111.111"]
       hash = parser.create_domain_hash(array)
-      expect(hash.length).to eq(2)
+      expect(hash.length).to eq(1)
     end
 
   end
