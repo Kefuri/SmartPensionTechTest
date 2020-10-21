@@ -75,5 +75,16 @@ describe LogParser do
       expect(hash[domain]).to be_an(Array)
     end
 
+    it "should store the domain's IP inside the array" do
+      logfile = ""
+      parser = LogParser.new(logfile)
+      domain = "/domainname"
+      ip = "192.111.111.111"
+      array = [domain + " " + ip]
+      hash = parser.create_domain_hash(array)
+      expect(hash[domain][0]).to eq(ip)
+    end
+
+
   end
 end
