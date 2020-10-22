@@ -133,6 +133,13 @@ describe LogParser do
       hash = parser.create_domain_hash(["/domainname 192.111.111.111"])
       expect { parser.printsort_domains_by_visits(hash) }.to output("/domainname 1 visit\n").to_stdout
     end
+
+    it "should print the two items in the hash" do
+      logfile=""
+      parser = LogParser.new(logfile)
+      hash = parser.create_domain_hash(["/domainname 192.111.111.111", "/domainnametwo 192.111.111.111"])
+      expect { parser.printsort_domains_by_visits(hash) }.to output("/domainname 1 visit\n/domainnametwo 1 visit\n").to_stdout
+    end
   end
 
 
