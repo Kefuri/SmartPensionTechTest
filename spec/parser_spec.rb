@@ -146,7 +146,7 @@ describe LogParser do
       parser = LogParser.new(logfile)
       visits = ["/domainname 192.111.111.111", "/domainnametwo 192.111.111.111", "/domainnametwo 192.111.111.112"]
       hash = parser.create_domain_hash(visits)
-      expect { parser.printsort_domains_by_visits(hash) }.to output("/domainname 1 visit\n/domainnametwo 2 visits\n").to_stdout
+      expect { parser.printsort_domains_by_visits(hash) }.to output("/domainnametwo 2 visits\n/domainname 1 visit\n").to_stdout
     end
 
     it "should print all items in the hash in order from highest to lowest" do
