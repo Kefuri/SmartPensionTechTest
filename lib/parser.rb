@@ -24,7 +24,15 @@ class LogParser
     end
     return hash
   end
+
+  def printsort_domains_by_visits(hash)
+    domains = hash.keys
+    domains.each do |d|
+      puts "#{d} 1 visit"
+    end
+  end
 end
+
 
 
 if $PROGRAM_NAME == __FILE__
