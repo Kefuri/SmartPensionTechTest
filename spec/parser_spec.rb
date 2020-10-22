@@ -12,27 +12,13 @@ describe LogParser do
     it "should print out the log given to the script" do
       log = 'spec/test_log.log'
       parser = LogParser.new(log)
-      expect { parser.print_log }.to output("/testc 3 visits\n/testa 2 visits\n/testb 1 visit\n/testa 2 unique visits\n/testc 2 unique visits\n/testb 1 unique visit\n").to_stdout
+      expected_string = "/testc 3 visits\n/testa 2 visits\n"\
+                        "/testb 1 visit\n/testa 2 unique visits\n"\
+                        "/testc 2 unique visits\n/testb 1 unique visit\n"
+      expect { parser.print_log }.to output(expected_string).to_stdout
     end
   end
 
-  context "#create_log_array" do
-    it "should return an array" do
-      log = 'spec/test_log.log'
-      parser = LogParser.new(log)
-      array = parser.create_log_array
-      expect(array).to be_an(Array)
-    end
-
-    it "should use File to read lines of the file" do
-      logfile = "log1\nlog2\nlog3"
-      parser = LogParser.new(logfile)
-      expect(File).to receive(:readlines).with(an_instance_of(String)).and_return(['log1', 'log2', 'log3'])
-      array = parser.create_log_array
-      expect(array).to eq(['log1', 'log2', 'log3'])
-    end
-  end
-  
   context "#create_domain_hash" do
     it "should create a hash" do
       log = ""
@@ -57,10 +43,11 @@ describe LogParser do
       expect(hash.length).to eq(2)
     end
 
-    it "should not create duplicate entries for domain names that are the same" do
+    it "shouldn't create duplicate keys for domains that are the same" do
       logfile = ""
       parser = LogParser.new(logfile)
-      array = ["/domainnameone 192.111.111.111", "/domainnameone 192.111.111.111"]
+      array = ["/domainnameone 192.111.111.111",
+                "/domainnameone 192.111.111.111"]
       hash = parser.create_domain_hash(array)
       expect(hash.length).to eq(1)
     end
@@ -118,7 +105,8 @@ describe LogParser do
       domain2 = "/domainnametwo"
       ip1 = "192.111.111.111"
       ip2 = "192.111.111.112"
-      array = [domain1 + ' ' + ip1, domain2 + ' ' + ip2, domain2 + ' ' + ip1, domain1 + ' ' + ip2]
+      array = [domain1 + ' ' + ip1, domain2 + ' ' + ip2,
+                domain2 + ' ' + ip1, domain1 + ' ' + ip2]
       hash = parser.create_domain_hash(array)
       expect(hash.length()).to eq(2)
       expect(hash[domain1].length).to eq(2)
@@ -128,60 +116,66 @@ describe LogParser do
 
   context "#printsort_domains_by_visits" do
     it "should print the first item in the hash" do
-      logfile=""
+      logfile = ""
       parser = LogParser.new(logfile)
       hash = parser.create_domain_hash(["/domainname 192.111.111.111"])
-      expect { parser.printsort_domains_by_visits(hash) }.to output("/domainname 1 visit\n").to_stdout
+      expect { parser.printsort_domains_by_visits(hash) }
+      .to output("/domainname 1 visit\n").to_stdout
     end
 
     it "should print the two items in the hash" do
-      logfile=""
+      logfile = ""
       parser = LogParser.new(logfile)
-      hash = parser.create_domain_hash(["/domainname 192.111.111.111", "/domainnametwo 192.111.111.111"])
-      expect { parser.printsort_domains_by_visits(hash) }.to output("/domainname 1 visit\n/domainnametwo 1 visit\n").to_stdout
+      hash = parser.create_domain_hash(["/domainname 192.111.111.111",
+                                        "/domainnametwo 192.111.111.111"])
+      expect { parser.printsort_domains_by_visits(hash) }
+      .to output("/domainname 1 visit\n/domainnametwo 1 visit\n").to_stdout
     end
 
     it "should print all items in the hash with the correct number of visits" do
-      logfile=""
+      logfile = ""
       parser = LogParser.new(logfile)
       visits = ["/domainname 192.111.111.111", "/domainnametwo 192.111.111.111", "/domainnametwo 192.111.111.112"]
       hash = parser.create_domain_hash(visits)
-      expect { parser.printsort_domains_by_visits(hash) }.to output("/domainnametwo 2 visits\n/domainname 1 visit\n").to_stdout
+      expect { parser.printsort_domains_by_visits(hash) }
+      .to output("/domainnametwo 2 visits\n/domainname 1 visit\n").to_stdout
     end
 
     it "should print all items in the hash in order from highest to lowest" do
-      logfile=""
+      logfile = ""
       parser = LogParser.new(logfile)
       visits = ["/domainname 192.111.111.111", "/domainnametwo 192.111.111.111", "/domainnametwo 192.111.111.111", "/domainnametwo 192.111.111.111"]
       hash = parser.create_domain_hash(visits)
-      expect { parser.printsort_domains_by_visits(hash) }.to output("/domainnametwo 3 visits\n/domainname 1 visit\n").to_stdout
+      expect { parser.printsort_domains_by_visits(hash) }
+      .to output("/domainnametwo 3 visits\n/domainname 1 visit\n").to_stdout
     end
   end
 
   context "#printsort_unique_domain_visits" do
     it "should print each domain in the hash" do
-      logfile=""
+      logfile = ""
       parser = LogParser.new(logfile)
       visits = ["/domainname1 192.111.111.111", "/domainname3 192.111.111.111", "/domainname1 192.111.111.112"]
       hash = parser.create_domain_hash(visits)
-      expect{ parser.printsort_unique_domain_visits(hash) }.to output("/domainname1 2 unique visits\n/domainname3 1 unique visit\n").to_stdout
+      expect { parser.printsort_unique_domain_visits(hash) }.to output("/domainname1 2 unique visits\n/domainname3 1 unique visit\n").to_stdout
     end
 
     it "should count the same IP address as 1 visit" do
-      logfile=""
+      logfile = ""
       parser = LogParser.new(logfile)
       visits = ["/domainname1 192.111.111.111", "/domainname1 192.111.111.111"]
       hash = parser.create_domain_hash(visits)
-      expect{ parser.printsort_unique_domain_visits(hash) }.to output("/domainname1 1 unique visit\n").to_stdout
+      expect { parser.printsort_unique_domain_visits(hash) }.to output("/domainname1 1 unique visit\n").to_stdout
     end
 
     it "should order the unique visits from highest to lowest" do
-      logfile=""
+      logfile = ""
       parser = LogParser.new(logfile)
       visits = ["/domainname2 192.111.111.112", "/domainname1 192.111.111.111", "/domainname3 192.111.111.111", "/domainname1 192.111.111.112",
          "/domainname3 192.111.111.111"]
       hash = parser.create_domain_hash(visits)
-      expect{ parser.printsort_unique_domain_visits(hash) }.to output("/domainname1 2 unique visits\n/domainname2 1 unique visit\n/domainname3 1 unique visit\n").to_stdout
+      expect { parser.printsort_unique_domain_visits(hash) }
+      .to output("/domainname1 2 unique visits\n/domainname2 1 unique visit\n/domainname3 1 unique visit\n").to_stdout
     end
   end
 end

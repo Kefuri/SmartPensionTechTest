@@ -10,11 +10,6 @@ class LogParser
     printsort_unique_domain_visits(domain_hash)
   end
 
-  def create_log_array
-    lines = File.readlines(@log)
-    return lines
-  end
-
   def create_domain_hash(domains)
     hash = Hash.new
     domains.each do |d|
@@ -29,9 +24,10 @@ class LogParser
   end
 
   def printsort_domains_by_visits(hash)
-    sortedvisits = hash.sort_by {|k, v| -v.length}
+    sortedvisits = hash.sort_by { |_k, v| -v.length }
     sortedvisits.each do |domain|
-      puts "#{domain[0]} #{domain[1].length} #{domain[1].length > 1 ? 'visits' : 'visit'}"
+      puts "#{domain[0]} #{domain[1].length}"\
+     " #{domain[1].length > 1 ? 'visits' : 'visit'}"
     end
   end
 
@@ -39,14 +35,20 @@ class LogParser
     hash.each do |domain|
       domain[1] = domain[1].uniq!
     end
-    sortedvisits = hash.sort_by {|k, v| -v.length}
+    sortedvisits = hash.sort_by { |_k, v| -v.length }
     sortedvisits.each do |domain|
-      puts "#{domain[0]} #{domain[1].length} unique #{domain[1].length > 1 ? 'visits' : 'visit'}"
+      puts "#{domain[0]} #{domain[1].length} unique"\
+      " #{domain[1].length > 1 ? 'visits' : 'visit'}"
     end
   end
+
+  private 
+
+  def create_log_array
+    lines = File.readlines(@log)
+    return lines
+  end
 end
-
-
 
 if $PROGRAM_NAME == __FILE__
   LogParser.new(ARGV[0]).print_log
