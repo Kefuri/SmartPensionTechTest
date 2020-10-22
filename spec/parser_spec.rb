@@ -107,7 +107,10 @@ describe LogParser do
       array = [domain1 + ' ' + ip1, domain2 + ' ' + ip1]
       hash = parser.create_domain_hash(array)
       expect(hash.length()).to eq(2)
+      expect(hash[domain1]).to eq([ip1])
+      expect(hash[domain2]).to eq([ip1])
     end
+
 
       
   end
