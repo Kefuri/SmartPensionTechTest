@@ -4,7 +4,10 @@ class LogParser
   end
 
   def print_log
-    puts @log
+    log_array = create_log_array
+    domain_hash = create_domain_hash(log_array)
+    printsort_domains_by_visits(domain_hash)
+    printsort_unique_domain_visits(domain_hash)
   end
 
   def create_log_array
@@ -46,5 +49,5 @@ end
 
 
 if $PROGRAM_NAME == __FILE__
-  LogParser.new(ARGV).print_log
+  LogParser.new(ARGV[0]).print_log
 end
