@@ -47,7 +47,7 @@ describe LogParser do
       logfile = ""
       parser = LogParser.new(logfile)
       array = ["/domainnameone 192.111.111.111",
-                "/domainnameone 192.111.111.111"]
+               "/domainnameone 192.111.111.111"]
       hash = parser.create_domain_hash(array)
       expect(hash.length).to eq(1)
     end
@@ -106,7 +106,7 @@ describe LogParser do
       ip1 = "192.111.111.111"
       ip2 = "192.111.111.112"
       array = [domain1 + ' ' + ip1, domain2 + ' ' + ip2,
-                domain2 + ' ' + ip1, domain1 + ' ' + ip2]
+               domain2 + ' ' + ip1, domain1 + ' ' + ip2]
       hash = parser.create_domain_hash(array)
       expect(hash.length()).to eq(2)
       expect(hash[domain1].length).to eq(2)
@@ -135,7 +135,8 @@ describe LogParser do
     it "should print all items in the hash with the correct number of visits" do
       logfile = ""
       parser = LogParser.new(logfile)
-      visits = ["/domainname 192.111.111.111", "/domainnametwo 192.111.111.111", "/domainnametwo 192.111.111.112"]
+      visits = ["/domainname 192.111.111.111", "/domainnametwo 192.111.111.111",
+                "/domainnametwo 192.111.111.112"]
       hash = parser.create_domain_hash(visits)
       expect { parser.printsort_domains_by_visits(hash) }
       .to output("/domainnametwo 2 visits\n/domainname 1 visit\n").to_stdout
@@ -144,7 +145,9 @@ describe LogParser do
     it "should print all items in the hash in order from highest to lowest" do
       logfile = ""
       parser = LogParser.new(logfile)
-      visits = ["/domainname 192.111.111.111", "/domainnametwo 192.111.111.111", "/domainnametwo 192.111.111.111", "/domainnametwo 192.111.111.111"]
+      visits = ["/domainname 192.111.111.111", "/domainnametwo 192.111.111.111",
+                "/domainnametwo 192.111.111.111",
+                "/domainnametwo 192.111.111.111"]
       hash = parser.create_domain_hash(visits)
       expect { parser.printsort_domains_by_visits(hash) }
       .to output("/domainnametwo 3 visits\n/domainname 1 visit\n").to_stdout
@@ -155,9 +158,12 @@ describe LogParser do
     it "should print each domain in the hash" do
       logfile = ""
       parser = LogParser.new(logfile)
-      visits = ["/domainname1 192.111.111.111", "/domainname3 192.111.111.111", "/domainname1 192.111.111.112"]
+      visits = ["/domainname1 192.111.111.111", "/domainname3 192.111.111.111", 
+                "/domainname1 192.111.111.112"]
       hash = parser.create_domain_hash(visits)
-      expect { parser.printsort_unique_domain_visits(hash) }.to output("/domainname1 2 unique visits\n/domainname3 1 unique visit\n").to_stdout
+      expect { parser.printsort_unique_domain_visits(hash) }
+      .to output("/domainname1 2 unique visits\n/domainname3 1 unique visit\n")
+      .to_stdout
     end
 
     it "should count the same IP address as 1 visit" do
@@ -165,17 +171,20 @@ describe LogParser do
       parser = LogParser.new(logfile)
       visits = ["/domainname1 192.111.111.111", "/domainname1 192.111.111.111"]
       hash = parser.create_domain_hash(visits)
-      expect { parser.printsort_unique_domain_visits(hash) }.to output("/domainname1 1 unique visit\n").to_stdout
+      expect { parser.printsort_unique_domain_visits(hash) }
+      .to output("/domainname1 1 unique visit\n").to_stdout
     end
 
     it "should order the unique visits from highest to lowest" do
       logfile = ""
       parser = LogParser.new(logfile)
-      visits = ["/domainname2 192.111.111.112", "/domainname1 192.111.111.111", "/domainname3 192.111.111.111", "/domainname1 192.111.111.112",
-         "/domainname3 192.111.111.111"]
+      visits = ["/domainname2 192.111.111.112", "/domainname1 192.111.111.111",
+                "/domainname3 192.111.111.111", "/domainname1 192.111.111.112",
+                "/domainname3 192.111.111.111"]
       hash = parser.create_domain_hash(visits)
       expect { parser.printsort_unique_domain_visits(hash) }
-      .to output("/domainname1 2 unique visits\n/domainname2 1 unique visit\n/domainname3 1 unique visit\n").to_stdout
+      .to output("/domainname1 2 unique visits\n/domainname2 1 unique visit\n"\
+                 "/domainname3 1 unique visit\n").to_stdout
     end
   end
 end
