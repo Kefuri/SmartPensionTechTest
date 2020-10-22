@@ -28,7 +28,7 @@ class LogParser
   def printsort_domains_by_visits(hash)
     domains = hash.keys
     domains.each do |d|
-      puts "#{d} 1 visit"
+      puts "#{d} #{hash[d].length} #{hash[d].length > 1 ? 'visits' : 'visit'}"
     end
   end
 end
