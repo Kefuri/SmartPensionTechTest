@@ -16,6 +16,10 @@ class LogParser
     hash = Hash.new
     domains.each do |d|
       domain = d.strip.split(" ")
+      if hash.key?(domain[0])
+        hash[domain[0]] << domain[1]
+        next
+      end
       hash.store(domain[0], [domain[1]])
     end
     return hash
