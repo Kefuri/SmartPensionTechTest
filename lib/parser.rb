@@ -34,7 +34,10 @@ class LogParser
 
   def printsort_unique_domain_visits(hash)
     hash.each do |domain|
-      domain[1] = domain[1].uniq
+      domain[1] = domain[1].uniq!
+    end
+    sortedvisits = hash.sort_by {|k, v| -v.length}
+    sortedvisits.each do |domain|
       puts "#{domain[0]} #{domain[1].length} unique #{domain[1].length > 1 ? 'visits' : 'visit'}"
     end
   end

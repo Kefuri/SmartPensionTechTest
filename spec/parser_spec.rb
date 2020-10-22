@@ -181,7 +181,7 @@ describe LogParser do
       visits = ["/domainname2 192.111.111.112", "/domainname1 192.111.111.111", "/domainname3 192.111.111.111", "/domainname1 192.111.111.112",
          "/domainname3 192.111.111.111"]
       hash = parser.create_domain_hash(visits)
-      expect{ parser.printsort_unique_domain_visits(hash) }.to output("/domainname1 2 unique visits\n/domainname3 1 unique visit\n/domainname2 1 unique visit\n").to_stdout
+      expect{ parser.printsort_unique_domain_visits(hash) }.to output("/domainname1 2 unique visits\n/domainname2 1 unique visit\n/domainname3 1 unique visit\n").to_stdout
     end
   end
 end
