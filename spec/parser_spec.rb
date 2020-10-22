@@ -174,5 +174,14 @@ describe LogParser do
       hash = parser.create_domain_hash(visits)
       expect{ parser.printsort_unique_domain_visits(hash) }.to output("/domainname1 1 unique visit\n").to_stdout
     end
+
+    it "should order the unique visits from highest to lowest" do
+      logfile=""
+      parser = LogParser.new(logfile)
+      visits = ["/domainname2 192.111.111.112", "/domainname1 192.111.111.111", "/domainname3 192.111.111.111", "/domainname1 192.111.111.112",
+         "/domainname3 192.111.111.111"]
+      hash = parser.create_domain_hash(visits)
+      expect{ parser.printsort_unique_domain_visits(hash) }.to output("/domainname1 2 unique visits\n/domainname3 1 unique visit\n/domainname2 1 unique visit\n").to_stdout
+    end
   end
 end
