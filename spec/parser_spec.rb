@@ -158,13 +158,13 @@ describe LogParser do
     end
   end
 
-  context "#printsort_unique_domains" do
+  context "#printsort_unique_domain_visits" do
     it "should print each domain in the hash" do
       logfile=""
       parser = LogParser.new(logfile)
       visits = ["/domainname1 192.111.111.111", "/domainname3 192.111.111.111", "/domainname1 192.111.111.112"]
       hash = parser.create_domain_hash(visits)
-      expect{ parser.printsort_unique_domains(hash) }.to output("/domainname1 2 unique visits\n/domainname3 1 unique visit").to_stdout
+      expect{ parser.printsort_unique_domain_visits(hash) }.to output("/domainname1 2 unique visits\n/domainname3 1 unique visit").to_stdout
     end
   end
 end
