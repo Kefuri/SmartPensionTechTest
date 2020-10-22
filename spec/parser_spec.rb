@@ -97,5 +97,18 @@ describe LogParser do
       expect(hash[domain][0]).to eq(ip1)
       expect(hash[domain][1]).to eq(ip2)
     end
+
+    it "should store an IP in each unique domain" do
+      logfile = ""
+      parser = LogParser.new(logfile)
+      domain1 = "/domainnameone"
+      domain2 = "/domainnametwo"
+      ip1 = "192.111.111.111"
+      array = [domain1 + ' ' + ip1, domain2 + ' ' + ip1]
+      hash = parser.create_domain_hash(array)
+      expect(hash.length()).to eq(2)
+    end
+
+      
   end
 end
