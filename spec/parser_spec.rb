@@ -125,4 +125,16 @@ describe LogParser do
       expect(hash[domain2].length).to eq(2)
     end
   end
+
+  context "#printsort_domains_by_visits" do
+    it "should print the first item in the hash" do
+      logfile=""
+      parser = LogParser.new(logfile)
+      hash = parser.create_domain_hash(["/domainname 192.111.111.111"])
+      expect { parser.printsort_domains_by_visits(hash) }.to output("/domainname 1 visit\n").to_stdout
+    end
+  end
+
+
+
 end
